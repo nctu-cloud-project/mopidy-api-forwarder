@@ -1,0 +1,23 @@
+{
+  "name": "mopidy-api-forwarder",
+  "version": "1.0.0",
+  "description": "A WebSocket client that forward commands to a local mopidy server behind NAT.",
+  "main": "forwarder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyliang/mopidy-api-forwarder.git"
+  },
+  "author": "Chih-Yung Liang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyliang/mopidy-api-forwarder/issues"
+  },
+  "homepage": "https://github.com/cyliang/mopidy-api-forwarder#readme",
+  "dependencies": {
+    "mopidy": "^0.5.0",
+    "websocket": "^1.0.22"
+  }
+}
