@@ -30,6 +30,18 @@ ws.on('connect', function(conn) {
 				}
 	};
 
+	conn.on('error', function(error) {
+		console.log("Connect to commander error: " + error.toString());
+		console.log("Reconnecting...");
+		reconnect();
+	});
+
+	conn.on('close', function() {
+		console.log("Connection closed.");
+		console.log("Reconnecting...");
+		reconnect();
+	});
+
 	conn.on('message', function(msg) {
 		var cmds = JSON.parse(msg.utf8Data);
 		for (var i in cmds) {
@@ -38,12 +50,13 @@ ws.on('connect', function(conn) {
 	});
 });
 
+var reconnect = function() {
+	ws.connect(commanderWS);
+}
 
 /* Connection with mopidy */
 var mopidy = new Mopidy({
 	console: console
 });
 
-mopidy.on('state:online', function() {
-	ws.connect(commanderWS);
-});
+mopidy.on('state:online', reconnect);
