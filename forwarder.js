@@ -18,7 +18,7 @@ ws.on('connect', function(conn) {
 		mopidy: function(cmd) {
 					var method = mopidy;
 					for (var index in cmd.command.command) {
-						method = method[cmd.command[index]];
+						method = method[cmd.command.command[index]];
 					}
 
 					method(cmd.command.param).done(function(data) {
@@ -33,7 +33,7 @@ ws.on('connect', function(conn) {
 	conn.on('message', function(msg) {
 		var cmds = JSON.parse(msg.utf8Data);
 		for (var i in cmds) {
-			targets[cmds[i]](cmds[i]);
+			targets[cmds[i].target](cmds[i]);
 		}
 	});
 });
