@@ -14,15 +14,27 @@ if (!commanderWS) {
 var ws = new WebSocketClient();
 
 ws.on('connect', function(conn) {
+	var targets = {
+		mopidy: function(cmd) {
+					var method = mopidy;
+					for (var index in cmd.command.command) {
+						method = method[cmd.command[index]];
+					}
+
+					method(cmd.command.param).done(function(data) {
+						conn.sendUTF(JSON.stringify({
+							command: cmd,
+							result: data
+						}));
+					});
+				}
+	};
+
 	conn.on('message', function(msg) {
-		var cmd = JSON.parse(msg.utf8Data);
-
-		var method = mopidy;
-		for (var index in cmd.command) {
-			method = method[cmd.command[index]];
+		var cmds = JSON.parse(msg.utf8Data);
+		for (var i in cmds) {
+			targets[cmds[i]](cmds[i]);
 		}
-
-		method(cmd.param);
 	});
 });
 
