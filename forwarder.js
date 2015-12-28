@@ -41,7 +41,9 @@ ws.on('connect', function(conn) {
 
 /* Connection with mopidy */
 var mopidy = new Mopidy({
-	console: console
+	console: console,
+	webSocketUrl: 'ws://localhost:6680/mopidy/ws/',
+	callingConvention: 'by-position-or-by-name'
 });
 
 mopidy.on('state:online', function() {
